@@ -3,8 +3,8 @@
 static CvMemStorage* storage = 0;
 static CvHaarClassifierCascade* cascade = 0;
 
-//char* cascade_name ="haarcascade_frontalface_alt.xml";
-/*    "haarcascade_profileface.xml";*/
+char* cascade_name ="../haar_like/haarcascade_frontalface_alt.xml";
+/*    "../haar_like/haarcascade_profileface.xml";*/
 
 Identify::Identify()
 {
@@ -18,15 +18,19 @@ int Identify::face_identify(IplImage* imagetest,int channel)
     switch(channel)
     {
      case 1:
-         cascade_name = "haarcascade_frontalface_alt2.xml";
+        printf("this is case 1:\n");
+        cascade_name = "../haar_like/haarcascade_frontalface_alt2.xml";
         break;
     case 2:
-         cascade_name = "haarcascade_eye.xml";
+         printf("this is case 2:\n");
+         cascade_name = "../haar_like/haarcascade_eye.xml";
         break;
     case 3:
-         cascade_name = "haarcascade_mcs_nose.xml";
+         printf("this is case 3:\n");
+         cascade_name = "../haar_like/haarcascade_mcs_nose.xml";
         break;
     default:
+          printf("this is  no case :\n");
         break;
 
     }
@@ -89,7 +93,7 @@ void Identify::detect_and_draw(IplImage* img )
                                          cvSize(30,30));
 
     t = (double)cvGetTickCount() - t;
-    printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
+   // printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
 
     //Loop through found objects and draw boxes around them
     for(int i=0;i<(objects? objects->total:0);++i)

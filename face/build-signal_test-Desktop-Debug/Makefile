@@ -52,12 +52,14 @@ SOURCES       = ../signal_test/main.cpp \
 		../signal_test/photoshop.cpp \
 		../signal_test/login.cpp \
 		../signal_test/file.cpp \
-		../signal_test/identify.cpp moc_mainwindow.cpp \
+		../signal_test/identify.cpp \
+		../signal_test/camp.cpp moc_mainwindow.cpp \
 		moc_face.cpp \
 		moc_picture.cpp \
 		moc_photoshop.cpp \
 		moc_login.cpp \
-		moc_file.cpp
+		moc_file.cpp \
+		moc_camp.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		face.o \
@@ -66,12 +68,14 @@ OBJECTS       = main.o \
 		login.o \
 		file.o \
 		identify.o \
+		camp.o \
 		moc_mainwindow.o \
 		moc_face.o \
 		moc_picture.o \
 		moc_photoshop.o \
 		moc_login.o \
-		moc_file.o
+		moc_file.o \
+		moc_camp.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -303,7 +307,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/signal_test1.0.0 || mkdir -p .tmp/signal_test1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/signal_test1.0.0/ && $(COPY_FILE) --parents ../signal_test/mainwindow.h ../signal_test/face.h ../signal_test/picture.h ../signal_test/photoshop.h ../signal_test/login.h ../signal_test/file.h ../signal_test/identify.h .tmp/signal_test1.0.0/ && $(COPY_FILE) --parents ../signal_test/main.cpp ../signal_test/mainwindow.cpp ../signal_test/face.cpp ../signal_test/picture.cpp ../signal_test/photoshop.cpp ../signal_test/login.cpp ../signal_test/file.cpp ../signal_test/identify.cpp .tmp/signal_test1.0.0/ && $(COPY_FILE) --parents ../signal_test/mainwindow.ui ../signal_test/face.ui ../signal_test/picture.ui ../signal_test/photoshop.ui ../signal_test/login.ui ../signal_test/file.ui .tmp/signal_test1.0.0/ && (cd `dirname .tmp/signal_test1.0.0` && $(TAR) signal_test1.0.0.tar signal_test1.0.0 && $(COMPRESS) signal_test1.0.0.tar) && $(MOVE) `dirname .tmp/signal_test1.0.0`/signal_test1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/signal_test1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) .tmp/signal_test1.0.0/ && $(COPY_FILE) --parents ../signal_test/mainwindow.h ../signal_test/face.h ../signal_test/picture.h ../signal_test/photoshop.h ../signal_test/login.h ../signal_test/file.h ../signal_test/identify.h ../signal_test/camp.h .tmp/signal_test1.0.0/ && $(COPY_FILE) --parents ../signal_test/main.cpp ../signal_test/mainwindow.cpp ../signal_test/face.cpp ../signal_test/picture.cpp ../signal_test/photoshop.cpp ../signal_test/login.cpp ../signal_test/file.cpp ../signal_test/identify.cpp ../signal_test/camp.cpp .tmp/signal_test1.0.0/ && $(COPY_FILE) --parents ../signal_test/mainwindow.ui ../signal_test/face.ui ../signal_test/picture.ui ../signal_test/photoshop.ui ../signal_test/login.ui ../signal_test/file.ui .tmp/signal_test1.0.0/ && (cd `dirname .tmp/signal_test1.0.0` && $(TAR) signal_test1.0.0.tar signal_test1.0.0 && $(COMPRESS) signal_test1.0.0.tar) && $(MOVE) `dirname .tmp/signal_test1.0.0`/signal_test1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/signal_test1.0.0
 
 
 clean:compiler_clean 
@@ -326,9 +330,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_face.cpp moc_picture.cpp moc_photoshop.cpp moc_login.cpp moc_file.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_face.cpp moc_picture.cpp moc_photoshop.cpp moc_login.cpp moc_file.cpp moc_camp.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_face.cpp moc_picture.cpp moc_photoshop.cpp moc_login.cpp moc_file.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_face.cpp moc_picture.cpp moc_photoshop.cpp moc_login.cpp moc_file.cpp moc_camp.cpp
 moc_mainwindow.cpp: /usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
@@ -450,8 +454,65 @@ moc_mainwindow.cpp: /usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtCore/QString \
 		../signal_test/file.h \
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
 		../signal_test/picture.h \
 		../signal_test/photoshop.h \
+		/usr/local/include/opencv2/core.hpp \
 		../signal_test/mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../signal_test/mainwindow.h -o moc_mainwindow.cpp
 
@@ -570,6 +631,62 @@ moc_face.cpp: /usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
 		/usr/include/qt5/QtCore/qfileinfo.h \
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
 		../signal_test/face.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../signal_test/face.h -o moc_face.cpp
 
@@ -682,6 +799,12 @@ moc_picture.cpp: /usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		../signal_test/file.h \
+		/usr/include/qt5/QtWidgets/QFileDialog \
+		/usr/include/qt5/QtWidgets/qfiledialog.h \
+		/usr/include/qt5/QtCore/qdir.h \
+		/usr/include/qt5/QtCore/qfileinfo.h \
+		/usr/include/qt5/QtCore/QString \
 		../signal_test/picture.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../signal_test/picture.h -o moc_picture.cpp
 
@@ -794,6 +917,16 @@ moc_photoshop.cpp: /usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/local/include/opencv2/core.hpp \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
 		../signal_test/photoshop.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../signal_test/photoshop.h -o moc_photoshop.cpp
 
@@ -919,8 +1052,65 @@ moc_login.cpp: /usr/include/qt5/QtWidgets/QDialog \
 		../signal_test/face.h \
 		/usr/include/qt5/QtCore/QString \
 		../signal_test/file.h \
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
 		../signal_test/picture.h \
 		../signal_test/photoshop.h \
+		/usr/local/include/opencv2/core.hpp \
 		../signal_test/login.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../signal_test/login.h -o moc_login.cpp
 
@@ -1037,8 +1227,173 @@ moc_file.cpp: /usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
 		/usr/include/qt5/QtCore/qfileinfo.h \
+		/usr/include/qt5/QtCore/QString \
 		../signal_test/file.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../signal_test/file.h -o moc_file.cpp
+
+moc_camp.cpp: /usr/include/qt5/QtWidgets/QWidget \
+		/usr/include/qt5/QtWidgets/qwidget.h \
+		/usr/include/qt5/QtGui/qwindowdefs.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qobjectdefs.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/include/qt5/QtCore/qobject.h \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qcoreevent.h \
+		/usr/include/qt5/QtCore/qscopedpointer.h \
+		/usr/include/qt5/QtCore/qmetatype.h \
+		/usr/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/include/qt5/QtCore/qisenum.h \
+		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtCore/qmargins.h \
+		/usr/include/qt5/QtCore/qrect.h \
+		/usr/include/qt5/QtCore/qsize.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtGui/qpaintdevice.h \
+		/usr/include/qt5/QtGui/qpalette.h \
+		/usr/include/qt5/QtGui/qcolor.h \
+		/usr/include/qt5/QtGui/qrgb.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtGui/qbrush.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtGui/qmatrix.h \
+		/usr/include/qt5/QtGui/qpolygon.h \
+		/usr/include/qt5/QtGui/qregion.h \
+		/usr/include/qt5/QtCore/qline.h \
+		/usr/include/qt5/QtGui/qtransform.h \
+		/usr/include/qt5/QtGui/qpainterpath.h \
+		/usr/include/qt5/QtGui/qimage.h \
+		/usr/include/qt5/QtGui/qpixmap.h \
+		/usr/include/qt5/QtCore/qsharedpointer.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtGui/qfont.h \
+		/usr/include/qt5/QtGui/qfontmetrics.h \
+		/usr/include/qt5/QtGui/qfontinfo.h \
+		/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/include/qt5/QtGui/qcursor.h \
+		/usr/include/qt5/QtGui/qkeysequence.h \
+		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/qurl.h \
+		/usr/include/qt5/QtCore/qurlquery.h \
+		/usr/include/qt5/QtCore/qfile.h \
+		/usr/include/qt5/QtCore/qfiledevice.h \
+		/usr/include/qt5/QtGui/qvector2d.h \
+		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) $(INCPATH) -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../signal_test/camp.h -o moc_camp.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1203,8 +1558,65 @@ main.o: ../signal_test/main.cpp /usr/include/qt5/QtWidgets/QApplication \
 		../signal_test/face.h \
 		/usr/include/qt5/QtCore/QString \
 		../signal_test/file.h \
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
 		../signal_test/picture.h \
-		../signal_test/photoshop.h
+		../signal_test/photoshop.h \
+		/usr/local/include/opencv2/core.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../signal_test/main.cpp
 
 mainwindow.o: ../signal_test/mainwindow.cpp ../signal_test/mainwindow.h \
@@ -1329,51 +1741,66 @@ mainwindow.o: ../signal_test/mainwindow.cpp ../signal_test/mainwindow.h \
 		/usr/include/qt5/QtWidgets/QDialog \
 		/usr/include/qt5/QtCore/QString \
 		../signal_test/file.h \
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
 		../signal_test/picture.h \
 		../signal_test/photoshop.h \
+		/usr/local/include/opencv2/core.hpp \
 		ui_mainwindow.h \
-		/usr/include/qt5/QtCore/QVariant \
-		/usr/include/qt5/QtWidgets/QAction \
-		/usr/include/qt5/QtWidgets/qaction.h \
-		/usr/include/qt5/QtWidgets/qactiongroup.h \
-		/usr/include/qt5/QtWidgets/QApplication \
-		/usr/include/qt5/QtWidgets/qapplication.h \
-		/usr/include/qt5/QtCore/qcoreapplication.h \
-		/usr/include/qt5/QtCore/qeventloop.h \
-		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
-		/usr/include/qt5/QtGui/qguiapplication.h \
-		/usr/include/qt5/QtGui/qinputmethod.h \
-		/usr/include/qt5/QtWidgets/QButtonGroup \
-		/usr/include/qt5/QtWidgets/qbuttongroup.h \
-		/usr/include/qt5/QtWidgets/QHeaderView \
-		/usr/include/qt5/QtWidgets/qheaderview.h \
-		/usr/include/qt5/QtWidgets/qabstractitemview.h \
-		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
-		/usr/include/qt5/QtWidgets/qframe.h \
-		/usr/include/qt5/QtCore/qabstractitemmodel.h \
-		/usr/include/qt5/QtCore/qitemselectionmodel.h \
-		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
-		/usr/include/qt5/QtWidgets/qstyleoption.h \
-		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
-		/usr/include/qt5/QtGui/qvalidator.h \
-		/usr/include/qt5/QtCore/qregularexpression.h \
-		/usr/include/qt5/QtWidgets/qslider.h \
-		/usr/include/qt5/QtWidgets/qabstractslider.h \
-		/usr/include/qt5/QtWidgets/qstyle.h \
-		/usr/include/qt5/QtWidgets/qtabbar.h \
-		/usr/include/qt5/QtWidgets/qrubberband.h \
-		/usr/include/qt5/QtWidgets/QMenu \
-		/usr/include/qt5/QtWidgets/qmenu.h \
-		/usr/include/qt5/QtWidgets/QMenuBar \
-		/usr/include/qt5/QtWidgets/qmenubar.h \
-		/usr/include/qt5/QtWidgets/QPushButton \
-		/usr/include/qt5/QtWidgets/qpushbutton.h \
-		/usr/include/qt5/QtWidgets/qabstractbutton.h \
-		/usr/include/qt5/QtWidgets/QStatusBar \
-		/usr/include/qt5/QtWidgets/qstatusbar.h \
-		/usr/include/qt5/QtWidgets/QToolBar \
-		/usr/include/qt5/QtWidgets/qtoolbar.h \
-		/usr/include/qt5/QtWidgets/QWidget \
 		../signal_test/login.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../signal_test/mainwindow.cpp
 
@@ -1493,48 +1920,72 @@ face.o: ../signal_test/face.cpp ../signal_test/face.h \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
 		/usr/include/qt5/QtCore/qfileinfo.h \
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
 		ui_face.h \
-		/usr/include/qt5/QtCore/QVariant \
-		/usr/include/qt5/QtWidgets/QAction \
-		/usr/include/qt5/QtWidgets/qaction.h \
-		/usr/include/qt5/QtGui/qicon.h \
-		/usr/include/qt5/QtWidgets/qactiongroup.h \
-		/usr/include/qt5/QtWidgets/QApplication \
-		/usr/include/qt5/QtWidgets/qapplication.h \
-		/usr/include/qt5/QtCore/qcoreapplication.h \
-		/usr/include/qt5/QtCore/qeventloop.h \
-		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
-		/usr/include/qt5/QtGui/qguiapplication.h \
-		/usr/include/qt5/QtGui/qinputmethod.h \
-		/usr/include/qt5/QtWidgets/QButtonGroup \
-		/usr/include/qt5/QtWidgets/qbuttongroup.h \
-		/usr/include/qt5/QtWidgets/QHeaderView \
-		/usr/include/qt5/QtWidgets/qheaderview.h \
-		/usr/include/qt5/QtWidgets/qabstractitemview.h \
-		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
-		/usr/include/qt5/QtWidgets/qframe.h \
-		/usr/include/qt5/QtCore/qabstractitemmodel.h \
-		/usr/include/qt5/QtCore/qitemselectionmodel.h \
-		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
-		/usr/include/qt5/QtWidgets/qstyleoption.h \
-		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
-		/usr/include/qt5/QtGui/qvalidator.h \
-		/usr/include/qt5/QtCore/qregularexpression.h \
-		/usr/include/qt5/QtWidgets/qslider.h \
-		/usr/include/qt5/QtWidgets/qabstractslider.h \
-		/usr/include/qt5/QtWidgets/qstyle.h \
-		/usr/include/qt5/QtWidgets/qtabbar.h \
-		/usr/include/qt5/QtWidgets/qtabwidget.h \
-		/usr/include/qt5/QtWidgets/qrubberband.h \
-		/usr/include/qt5/QtWidgets/QPushButton \
-		/usr/include/qt5/QtWidgets/qpushbutton.h \
-		/usr/include/qt5/QtWidgets/qabstractbutton.h \
 		../signal_test/mainwindow.h \
 		/usr/include/qt5/QtWidgets/QMainWindow \
 		/usr/include/qt5/QtWidgets/qmainwindow.h \
+		/usr/include/qt5/QtWidgets/qtabwidget.h \
+		/usr/include/qt5/QtGui/qicon.h \
 		/usr/include/qt5/QtCore/QDebug \
 		../signal_test/picture.h \
-		../signal_test/photoshop.h
+		../signal_test/photoshop.h \
+		/usr/local/include/opencv2/core.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o face.o ../signal_test/face.cpp
 
 picture.o: ../signal_test/picture.cpp ../signal_test/picture.h \
@@ -1647,54 +2098,78 @@ picture.o: ../signal_test/picture.cpp ../signal_test/picture.h \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
-		ui_picture.h \
-		/usr/include/qt5/QtCore/QVariant \
-		/usr/include/qt5/QtWidgets/QAction \
-		/usr/include/qt5/QtWidgets/qaction.h \
-		/usr/include/qt5/QtGui/qicon.h \
-		/usr/include/qt5/QtWidgets/qactiongroup.h \
-		/usr/include/qt5/QtWidgets/QApplication \
-		/usr/include/qt5/QtWidgets/qapplication.h \
-		/usr/include/qt5/QtCore/qcoreapplication.h \
-		/usr/include/qt5/QtCore/qeventloop.h \
-		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
-		/usr/include/qt5/QtGui/qguiapplication.h \
-		/usr/include/qt5/QtGui/qinputmethod.h \
-		/usr/include/qt5/QtWidgets/QButtonGroup \
-		/usr/include/qt5/QtWidgets/qbuttongroup.h \
-		/usr/include/qt5/QtWidgets/QHeaderView \
-		/usr/include/qt5/QtWidgets/qheaderview.h \
-		/usr/include/qt5/QtWidgets/qabstractitemview.h \
-		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
-		/usr/include/qt5/QtWidgets/qframe.h \
-		/usr/include/qt5/QtCore/qabstractitemmodel.h \
-		/usr/include/qt5/QtCore/qitemselectionmodel.h \
-		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
-		/usr/include/qt5/QtWidgets/qstyleoption.h \
-		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
-		/usr/include/qt5/QtGui/qvalidator.h \
-		/usr/include/qt5/QtCore/qregularexpression.h \
-		/usr/include/qt5/QtWidgets/qslider.h \
-		/usr/include/qt5/QtWidgets/qabstractslider.h \
-		/usr/include/qt5/QtWidgets/qstyle.h \
-		/usr/include/qt5/QtWidgets/qtabbar.h \
-		/usr/include/qt5/QtWidgets/qtabwidget.h \
-		/usr/include/qt5/QtWidgets/qrubberband.h \
-		/usr/include/qt5/QtWidgets/QPushButton \
-		/usr/include/qt5/QtWidgets/qpushbutton.h \
-		/usr/include/qt5/QtWidgets/qabstractbutton.h \
-		../signal_test/mainwindow.h \
+		../signal_test/file.h \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
 		/usr/include/qt5/QtCore/qfileinfo.h \
+		/usr/include/qt5/QtCore/QString \
+		ui_picture.h \
+		../signal_test/mainwindow.h \
 		/usr/include/qt5/QtWidgets/QMainWindow \
 		/usr/include/qt5/QtWidgets/qmainwindow.h \
+		/usr/include/qt5/QtWidgets/qtabwidget.h \
+		/usr/include/qt5/QtGui/qicon.h \
 		/usr/include/qt5/QtCore/QDebug \
 		../signal_test/face.h \
-		/usr/include/qt5/QtCore/QString \
-		../signal_test/file.h \
-		../signal_test/photoshop.h
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
+		../signal_test/photoshop.h \
+		/usr/local/include/opencv2/core.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o picture.o ../signal_test/picture.cpp
 
 photoshop.o: ../signal_test/photoshop.cpp ../signal_test/photoshop.h \
@@ -1807,42 +2282,17 @@ photoshop.o: ../signal_test/photoshop.cpp ../signal_test/photoshop.h \
 		/usr/include/qt5/QtCore/qfiledevice.h \
 		/usr/include/qt5/QtGui/qvector2d.h \
 		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/local/include/opencv2/core.hpp \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
 		ui_photoshop.h \
-		/usr/include/qt5/QtCore/QVariant \
-		/usr/include/qt5/QtWidgets/QAction \
-		/usr/include/qt5/QtWidgets/qaction.h \
-		/usr/include/qt5/QtGui/qicon.h \
-		/usr/include/qt5/QtWidgets/qactiongroup.h \
-		/usr/include/qt5/QtWidgets/QApplication \
-		/usr/include/qt5/QtWidgets/qapplication.h \
-		/usr/include/qt5/QtCore/qcoreapplication.h \
-		/usr/include/qt5/QtCore/qeventloop.h \
-		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
-		/usr/include/qt5/QtGui/qguiapplication.h \
-		/usr/include/qt5/QtGui/qinputmethod.h \
-		/usr/include/qt5/QtWidgets/QButtonGroup \
-		/usr/include/qt5/QtWidgets/qbuttongroup.h \
-		/usr/include/qt5/QtWidgets/QHeaderView \
-		/usr/include/qt5/QtWidgets/qheaderview.h \
-		/usr/include/qt5/QtWidgets/qabstractitemview.h \
-		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
-		/usr/include/qt5/QtWidgets/qframe.h \
-		/usr/include/qt5/QtCore/qabstractitemmodel.h \
-		/usr/include/qt5/QtCore/qitemselectionmodel.h \
-		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
-		/usr/include/qt5/QtWidgets/qstyleoption.h \
-		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
-		/usr/include/qt5/QtGui/qvalidator.h \
-		/usr/include/qt5/QtCore/qregularexpression.h \
-		/usr/include/qt5/QtWidgets/qslider.h \
-		/usr/include/qt5/QtWidgets/qabstractslider.h \
-		/usr/include/qt5/QtWidgets/qstyle.h \
-		/usr/include/qt5/QtWidgets/qtabbar.h \
-		/usr/include/qt5/QtWidgets/qtabwidget.h \
-		/usr/include/qt5/QtWidgets/qrubberband.h \
-		/usr/include/qt5/QtWidgets/QPushButton \
-		/usr/include/qt5/QtWidgets/qpushbutton.h \
-		/usr/include/qt5/QtWidgets/qabstractbutton.h \
 		../signal_test/mainwindow.h \
 		/usr/include/qt5/QtWidgets/QFileDialog \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
@@ -1850,11 +2300,62 @@ photoshop.o: ../signal_test/photoshop.cpp ../signal_test/photoshop.h \
 		/usr/include/qt5/QtCore/qfileinfo.h \
 		/usr/include/qt5/QtWidgets/QMainWindow \
 		/usr/include/qt5/QtWidgets/qmainwindow.h \
+		/usr/include/qt5/QtWidgets/qtabwidget.h \
+		/usr/include/qt5/QtGui/qicon.h \
 		/usr/include/qt5/QtCore/QDebug \
 		../signal_test/face.h \
 		/usr/include/qt5/QtCore/QString \
 		../signal_test/file.h \
-		../signal_test/picture.h
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
+		../signal_test/picture.h \
+		/usr/include/qt5/QtWidgets/QMessageBox \
+		/usr/include/qt5/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o photoshop.o ../signal_test/photoshop.cpp
 
 login.o: ../signal_test/login.cpp ../signal_test/login.h \
@@ -1980,50 +2481,66 @@ login.o: ../signal_test/login.cpp ../signal_test/login.h \
 		../signal_test/face.h \
 		/usr/include/qt5/QtCore/QString \
 		../signal_test/file.h \
+		../signal_test/identify.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
 		../signal_test/picture.h \
 		../signal_test/photoshop.h \
+		/usr/local/include/opencv2/core.hpp \
 		ui_login.h \
-		/usr/include/qt5/QtCore/QVariant \
-		/usr/include/qt5/QtWidgets/QAction \
-		/usr/include/qt5/QtWidgets/qaction.h \
-		/usr/include/qt5/QtWidgets/qactiongroup.h \
-		/usr/include/qt5/QtWidgets/QApplication \
-		/usr/include/qt5/QtWidgets/qapplication.h \
-		/usr/include/qt5/QtCore/qcoreapplication.h \
-		/usr/include/qt5/QtCore/qeventloop.h \
-		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
-		/usr/include/qt5/QtGui/qguiapplication.h \
-		/usr/include/qt5/QtGui/qinputmethod.h \
-		/usr/include/qt5/QtWidgets/QButtonGroup \
-		/usr/include/qt5/QtWidgets/qbuttongroup.h \
-		/usr/include/qt5/QtWidgets/QHeaderView \
-		/usr/include/qt5/QtWidgets/qheaderview.h \
-		/usr/include/qt5/QtWidgets/qabstractitemview.h \
-		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
-		/usr/include/qt5/QtWidgets/qframe.h \
-		/usr/include/qt5/QtCore/qabstractitemmodel.h \
-		/usr/include/qt5/QtCore/qitemselectionmodel.h \
-		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
-		/usr/include/qt5/QtWidgets/qstyleoption.h \
-		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
-		/usr/include/qt5/QtGui/qvalidator.h \
-		/usr/include/qt5/QtCore/qregularexpression.h \
-		/usr/include/qt5/QtWidgets/qslider.h \
-		/usr/include/qt5/QtWidgets/qabstractslider.h \
-		/usr/include/qt5/QtWidgets/qstyle.h \
-		/usr/include/qt5/QtWidgets/qtabbar.h \
-		/usr/include/qt5/QtWidgets/qrubberband.h \
-		/usr/include/qt5/QtWidgets/QLabel \
-		/usr/include/qt5/QtWidgets/qlabel.h \
-		/usr/include/qt5/QtWidgets/QLineEdit \
-		/usr/include/qt5/QtWidgets/qlineedit.h \
-		/usr/include/qt5/QtGui/qtextcursor.h \
-		/usr/include/qt5/QtGui/qtextformat.h \
-		/usr/include/qt5/QtGui/qpen.h \
-		/usr/include/qt5/QtGui/qtextoption.h \
-		/usr/include/qt5/QtWidgets/QPushButton \
-		/usr/include/qt5/QtWidgets/qpushbutton.h \
-		/usr/include/qt5/QtWidgets/qabstractbutton.h \
 		/usr/include/qt5/QtGui/QtGui \
 		/usr/include/qt5/QtGui/QtGuiDepends \
 		/usr/include/qt5/QtCore/QtCore \
@@ -2057,8 +2574,10 @@ login.o: ../signal_test/login.cpp ../signal_test/login.h \
 		/usr/include/qt5/QtCore/qtemporarydir.h \
 		/usr/include/qt5/QtCore/QScopedPointer \
 		/usr/include/qt5/QtCore/qtemporaryfile.h \
+		/usr/include/qt5/QtCore/qabstractitemmodel.h \
 		/usr/include/qt5/QtCore/qabstractproxymodel.h \
 		/usr/include/qt5/QtCore/qidentityproxymodel.h \
+		/usr/include/qt5/QtCore/qitemselectionmodel.h \
 		/usr/include/qt5/QtCore/qsortfilterproxymodel.h \
 		/usr/include/qt5/QtCore/qstringlistmodel.h \
 		/usr/include/qt5/QtCore/qjsonarray.h \
@@ -2066,8 +2585,10 @@ login.o: ../signal_test/login.cpp ../signal_test/login.h \
 		/usr/include/qt5/QtCore/qjsondocument.h \
 		/usr/include/qt5/QtCore/qjsonobject.h \
 		/usr/include/qt5/QtCore/qabstracteventdispatcher.h \
+		/usr/include/qt5/QtCore/qeventloop.h \
 		/usr/include/qt5/QtCore/qabstractnativeeventfilter.h \
 		/usr/include/qt5/QtCore/qbasictimer.h \
+		/usr/include/qt5/QtCore/qcoreapplication.h \
 		/usr/include/qt5/QtCore/qmath.h \
 		/usr/include/qt5/QtCore/qmetaobject.h \
 		/usr/include/qt5/QtCore/qmimedata.h \
@@ -2121,6 +2642,7 @@ login.o: ../signal_test/login.cpp ../signal_test/login.h \
 		/usr/include/qt5/QtCore/qlinkedlist.h \
 		/usr/include/qt5/QtCore/qmessageauthenticationcode.h \
 		/usr/include/qt5/QtCore/qqueue.h \
+		/usr/include/qt5/QtCore/qregularexpression.h \
 		/usr/include/qt5/QtCore/qscopedvaluerollback.h \
 		/usr/include/qt5/QtCore/qstack.h \
 		/usr/include/qt5/QtCore/qtextboundaryfinder.h \
@@ -2147,6 +2669,8 @@ login.o: ../signal_test/login.cpp ../signal_test/login.h \
 		/usr/include/qt5/QtGui/qdrag.h \
 		/usr/include/qt5/QtGui/qgenericplugin.h \
 		/usr/include/qt5/QtGui/qgenericpluginfactory.h \
+		/usr/include/qt5/QtGui/qguiapplication.h \
+		/usr/include/qt5/QtGui/qinputmethod.h \
 		/usr/include/qt5/QtGui/qoffscreensurface.h \
 		/usr/include/qt5/QtGui/qsurface.h \
 		/usr/include/qt5/QtGui/qsurfaceformat.h \
@@ -2188,12 +2712,16 @@ login.o: ../signal_test/login.cpp ../signal_test/login.h \
 		/usr/include/qt5/QtGui/qpagedpaintdevice.h \
 		/usr/include/qt5/QtGui/qpaintengine.h \
 		/usr/include/qt5/QtGui/qpainter.h \
+		/usr/include/qt5/QtGui/qtextoption.h \
+		/usr/include/qt5/QtGui/qpen.h \
 		/usr/include/qt5/QtGui/qpdfwriter.h \
 		/usr/include/qt5/QtGui/qabstracttextdocumentlayout.h \
 		/usr/include/qt5/QtGui/qtextlayout.h \
+		/usr/include/qt5/QtGui/qtextformat.h \
 		/usr/include/qt5/QtGui/qglyphrun.h \
 		/usr/include/qt5/QtGui/qrawfont.h \
 		/usr/include/qt5/QtGui/qfontdatabase.h \
+		/usr/include/qt5/QtGui/qtextcursor.h \
 		/usr/include/qt5/QtGui/qtextdocument.h \
 		/usr/include/qt5/QtGui/qstatictext.h \
 		/usr/include/qt5/QtGui/qsyntaxhighlighter.h \
@@ -2203,6 +2731,7 @@ login.o: ../signal_test/login.cpp ../signal_test/login.h \
 		/usr/include/qt5/QtGui/qtextlist.h \
 		/usr/include/qt5/QtGui/qtexttable.h \
 		/usr/include/qt5/QtGui/qdesktopservices.h \
+		/usr/include/qt5/QtGui/qvalidator.h \
 		/usr/include/qt5/QtGui/qtguiversion.h \
 		/usr/include/qt5/QtWidgets/QMessageBox \
 		/usr/include/qt5/QtWidgets/qmessagebox.h
@@ -2322,39 +2851,11 @@ file.o: ../signal_test/file.cpp ../signal_test/file.h \
 		/usr/include/qt5/QtWidgets/qfiledialog.h \
 		/usr/include/qt5/QtCore/qdir.h \
 		/usr/include/qt5/QtCore/qfileinfo.h \
+		/usr/include/qt5/QtCore/QString \
 		ui_file.h \
-		/usr/include/qt5/QtCore/QVariant \
-		/usr/include/qt5/QtWidgets/QAction \
-		/usr/include/qt5/QtWidgets/qaction.h \
-		/usr/include/qt5/QtGui/qicon.h \
-		/usr/include/qt5/QtWidgets/qactiongroup.h \
-		/usr/include/qt5/QtWidgets/QApplication \
-		/usr/include/qt5/QtWidgets/qapplication.h \
-		/usr/include/qt5/QtCore/qcoreapplication.h \
-		/usr/include/qt5/QtCore/qeventloop.h \
-		/usr/include/qt5/QtWidgets/qdesktopwidget.h \
-		/usr/include/qt5/QtGui/qguiapplication.h \
-		/usr/include/qt5/QtGui/qinputmethod.h \
-		/usr/include/qt5/QtWidgets/QButtonGroup \
-		/usr/include/qt5/QtWidgets/qbuttongroup.h \
-		/usr/include/qt5/QtWidgets/QHeaderView \
-		/usr/include/qt5/QtWidgets/qheaderview.h \
-		/usr/include/qt5/QtWidgets/qabstractitemview.h \
-		/usr/include/qt5/QtWidgets/qabstractscrollarea.h \
-		/usr/include/qt5/QtWidgets/qframe.h \
-		/usr/include/qt5/QtCore/qabstractitemmodel.h \
-		/usr/include/qt5/QtCore/qitemselectionmodel.h \
-		/usr/include/qt5/QtWidgets/qabstractitemdelegate.h \
-		/usr/include/qt5/QtWidgets/qstyleoption.h \
-		/usr/include/qt5/QtWidgets/qabstractspinbox.h \
-		/usr/include/qt5/QtGui/qvalidator.h \
-		/usr/include/qt5/QtCore/qregularexpression.h \
-		/usr/include/qt5/QtWidgets/qslider.h \
-		/usr/include/qt5/QtWidgets/qabstractslider.h \
-		/usr/include/qt5/QtWidgets/qstyle.h \
-		/usr/include/qt5/QtWidgets/qtabbar.h \
-		/usr/include/qt5/QtWidgets/qtabwidget.h \
-		/usr/include/qt5/QtWidgets/qrubberband.h
+		/usr/include/qt5/QtCore/QDebug \
+		/usr/include/qt5/QtWidgets/QMessageBox \
+		/usr/include/qt5/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o file.o ../signal_test/file.cpp
 
 identify.o: ../signal_test/identify.cpp ../signal_test/identify.h \
@@ -2413,6 +2914,179 @@ identify.o: ../signal_test/identify.cpp ../signal_test/identify.h \
 		/usr/local/include/opencv2/highgui/highgui.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o identify.o ../signal_test/identify.cpp
 
+camp.o: ../signal_test/camp.cpp ../signal_test/camp.h \
+		/usr/include/qt5/QtWidgets/QWidget \
+		/usr/include/qt5/QtWidgets/qwidget.h \
+		/usr/include/qt5/QtGui/qwindowdefs.h \
+		/usr/include/qt5/QtCore/qglobal.h \
+		/usr/include/qt5/QtCore/qconfig.h \
+		/usr/include/qt5/QtCore/qfeatures.h \
+		/usr/include/qt5/QtCore/qsystemdetection.h \
+		/usr/include/qt5/QtCore/qprocessordetection.h \
+		/usr/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/include/qt5/QtCore/qglobalstatic.h \
+		/usr/include/qt5/QtCore/qatomic.h \
+		/usr/include/qt5/QtCore/qbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/include/qt5/QtCore/qgenericatomic.h \
+		/usr/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/include/qt5/QtCore/qatomic_integrity.h \
+		/usr/include/qt5/QtCore/qoldbasicatomic.h \
+		/usr/include/qt5/QtCore/qatomic_vxworks.h \
+		/usr/include/qt5/QtCore/qatomic_power.h \
+		/usr/include/qt5/QtCore/qatomic_alpha.h \
+		/usr/include/qt5/QtCore/qatomic_armv7.h \
+		/usr/include/qt5/QtCore/qatomic_armv6.h \
+		/usr/include/qt5/QtCore/qatomic_armv5.h \
+		/usr/include/qt5/QtCore/qatomic_bfin.h \
+		/usr/include/qt5/QtCore/qatomic_ia64.h \
+		/usr/include/qt5/QtCore/qatomic_mips.h \
+		/usr/include/qt5/QtCore/qatomic_s390.h \
+		/usr/include/qt5/QtCore/qatomic_sh4a.h \
+		/usr/include/qt5/QtCore/qatomic_sparc.h \
+		/usr/include/qt5/QtCore/qatomic_gcc.h \
+		/usr/include/qt5/QtCore/qatomic_x86.h \
+		/usr/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/include/qt5/QtCore/qatomic_unix.h \
+		/usr/include/qt5/QtCore/qmutex.h \
+		/usr/include/qt5/QtCore/qlogging.h \
+		/usr/include/qt5/QtCore/qflags.h \
+		/usr/include/qt5/QtCore/qtypeinfo.h \
+		/usr/include/qt5/QtCore/qtypetraits.h \
+		/usr/include/qt5/QtCore/qsysinfo.h \
+		/usr/include/qt5/QtCore/qobjectdefs.h \
+		/usr/include/qt5/QtCore/qnamespace.h \
+		/usr/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/include/qt5/QtCore/qobject.h \
+		/usr/include/qt5/QtCore/qstring.h \
+		/usr/include/qt5/QtCore/qchar.h \
+		/usr/include/qt5/QtCore/qbytearray.h \
+		/usr/include/qt5/QtCore/qrefcount.h \
+		/usr/include/qt5/QtCore/qarraydata.h \
+		/usr/include/qt5/QtCore/qstringbuilder.h \
+		/usr/include/qt5/QtCore/qlist.h \
+		/usr/include/qt5/QtCore/qalgorithms.h \
+		/usr/include/qt5/QtCore/qiterator.h \
+		/usr/include/qt5/QtCore/qcoreevent.h \
+		/usr/include/qt5/QtCore/qscopedpointer.h \
+		/usr/include/qt5/QtCore/qmetatype.h \
+		/usr/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/include/qt5/QtCore/qisenum.h \
+		/usr/include/qt5/QtCore/qobject_impl.h \
+		/usr/include/qt5/QtCore/qmargins.h \
+		/usr/include/qt5/QtCore/qrect.h \
+		/usr/include/qt5/QtCore/qsize.h \
+		/usr/include/qt5/QtCore/qpoint.h \
+		/usr/include/qt5/QtGui/qpaintdevice.h \
+		/usr/include/qt5/QtGui/qpalette.h \
+		/usr/include/qt5/QtGui/qcolor.h \
+		/usr/include/qt5/QtGui/qrgb.h \
+		/usr/include/qt5/QtCore/qstringlist.h \
+		/usr/include/qt5/QtCore/qdatastream.h \
+		/usr/include/qt5/QtCore/qiodevice.h \
+		/usr/include/qt5/QtCore/qpair.h \
+		/usr/include/qt5/QtCore/qregexp.h \
+		/usr/include/qt5/QtCore/qstringmatcher.h \
+		/usr/include/qt5/QtGui/qbrush.h \
+		/usr/include/qt5/QtCore/qvector.h \
+		/usr/include/qt5/QtGui/qmatrix.h \
+		/usr/include/qt5/QtGui/qpolygon.h \
+		/usr/include/qt5/QtGui/qregion.h \
+		/usr/include/qt5/QtCore/qline.h \
+		/usr/include/qt5/QtGui/qtransform.h \
+		/usr/include/qt5/QtGui/qpainterpath.h \
+		/usr/include/qt5/QtGui/qimage.h \
+		/usr/include/qt5/QtGui/qpixmap.h \
+		/usr/include/qt5/QtCore/qsharedpointer.h \
+		/usr/include/qt5/QtCore/qshareddata.h \
+		/usr/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/include/qt5/QtCore/qhash.h \
+		/usr/include/qt5/QtGui/qfont.h \
+		/usr/include/qt5/QtGui/qfontmetrics.h \
+		/usr/include/qt5/QtGui/qfontinfo.h \
+		/usr/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/include/qt5/QtGui/qcursor.h \
+		/usr/include/qt5/QtGui/qkeysequence.h \
+		/usr/include/qt5/QtGui/qevent.h \
+		/usr/include/qt5/QtCore/qvariant.h \
+		/usr/include/qt5/QtCore/qmap.h \
+		/usr/include/qt5/QtCore/qdebug.h \
+		/usr/include/qt5/QtCore/qtextstream.h \
+		/usr/include/qt5/QtCore/qlocale.h \
+		/usr/include/qt5/QtCore/qset.h \
+		/usr/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/include/qt5/QtCore/qurl.h \
+		/usr/include/qt5/QtCore/qurlquery.h \
+		/usr/include/qt5/QtCore/qfile.h \
+		/usr/include/qt5/QtCore/qfiledevice.h \
+		/usr/include/qt5/QtGui/qvector2d.h \
+		/usr/include/qt5/QtGui/qtouchdevice.h \
+		/usr/local/include/opencv/cv.h \
+		/usr/local/include/opencv2/core/core_c.h \
+		/usr/local/include/opencv2/core/types_c.h \
+		/usr/local/include/opencv2/core/core.hpp \
+		/usr/local/include/opencv2/core/version.hpp \
+		/usr/local/include/opencv2/core/operations.hpp \
+		/usr/local/include/opencv2/core/mat.hpp \
+		/usr/local/include/opencv2/imgproc/imgproc_c.h \
+		/usr/local/include/opencv2/imgproc/types_c.h \
+		/usr/local/include/opencv2/imgproc/imgproc.hpp \
+		/usr/local/include/opencv2/video/tracking.hpp \
+		/usr/local/include/opencv2/features2d/features2d.hpp \
+		/usr/local/include/opencv2/flann/miniflann.hpp \
+		/usr/local/include/opencv2/flann/defines.h \
+		/usr/local/include/opencv2/flann/config.h \
+		/usr/local/include/opencv2/flann/flann.hpp \
+		/usr/local/include/opencv2/flann/flann_base.hpp \
+		/usr/local/include/opencv2/flann/general.h \
+		/usr/local/include/opencv2/flann/matrix.h \
+		/usr/local/include/opencv2/flann/params.h \
+		/usr/local/include/opencv2/flann/any.h \
+		/usr/local/include/opencv2/flann/saving.h \
+		/usr/local/include/opencv2/flann/nn_index.h \
+		/usr/local/include/opencv2/flann/result_set.h \
+		/usr/local/include/opencv2/flann/all_indices.h \
+		/usr/local/include/opencv2/flann/kdtree_index.h \
+		/usr/local/include/opencv2/flann/dynamic_bitset.h \
+		/usr/local/include/opencv2/flann/dist.h \
+		/usr/local/include/opencv2/flann/heap.h \
+		/usr/local/include/opencv2/flann/allocator.h \
+		/usr/local/include/opencv2/flann/random.h \
+		/usr/local/include/opencv2/flann/kdtree_single_index.h \
+		/usr/local/include/opencv2/flann/kmeans_index.h \
+		/usr/local/include/opencv2/flann/logger.h \
+		/usr/local/include/opencv2/flann/composite_index.h \
+		/usr/local/include/opencv2/flann/linear_index.h \
+		/usr/local/include/opencv2/flann/hierarchical_clustering_index.h \
+		/usr/local/include/opencv2/flann/lsh_index.h \
+		/usr/local/include/opencv2/flann/lsh_table.h \
+		/usr/local/include/opencv2/flann/autotuned_index.h \
+		/usr/local/include/opencv2/flann/ground_truth.h \
+		/usr/local/include/opencv2/flann/index_testing.h \
+		/usr/local/include/opencv2/flann/timer.h \
+		/usr/local/include/opencv2/flann/sampling.h \
+		/usr/local/include/opencv2/calib3d/calib3d.hpp \
+		/usr/local/include/opencv2/core/affine.hpp \
+		/usr/local/include/opencv2/objdetect/objdetect.hpp \
+		/usr/local/include/opencv2/legacy/compat.hpp \
+		/usr/local/include/opencv2/core/internal.hpp \
+		/usr/local/include/opencv2/core/eigen.hpp \
+		/usr/local/include/opencv/highgui.h \
+		/usr/local/include/opencv2/highgui/highgui_c.h \
+		/usr/local/include/opencv2/highgui/highgui.hpp \
+		/usr/include/qt5/QtCore/QString \
+		/usr/include/qt5/QtWidgets/QFileDialog \
+		/usr/include/qt5/QtWidgets/qfiledialog.h \
+		/usr/include/qt5/QtCore/qdir.h \
+		/usr/include/qt5/QtCore/qfileinfo.h \
+		/usr/include/qt5/QtWidgets/qdialog.h \
+		/usr/include/qt5/QtWidgets/QMessageBox \
+		/usr/include/qt5/QtWidgets/qmessagebox.h \
+		/usr/include/qt5/QtWidgets/QDialog
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o camp.o ../signal_test/camp.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
@@ -2430,6 +3104,9 @@ moc_login.o: moc_login.cpp
 
 moc_file.o: moc_file.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_file.o moc_file.cpp
+
+moc_camp.o: moc_camp.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_camp.o moc_camp.cpp
 
 ####### Install
 

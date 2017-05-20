@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     photoshop.cpp \
     login.cpp \
     file.cpp \
-    identify.cpp
+    identify.cpp \
+    camp.cpp
 
 HEADERS  += mainwindow.h \
     face.h \
@@ -38,7 +39,8 @@ HEADERS  += mainwindow.h \
     photoshop.h \
     login.h \
     file.h \
-    identify.h
+    identify.h \
+    camp.h
 
 FORMS    += mainwindow.ui \
     face.ui \
@@ -68,7 +70,17 @@ LIBS += /usr/local/lib/libopencv_highgui.so \
 
 OTHER_FILES += \
     haarcascade_frontalface_alt.xml \
-    haarcascade_frontalface_alt2.xml
+    haarcascade_frontalface_alt2.xml \
+    ../haar_like/haarcascade_eye.xml \
+    ../haar_like/haarcascade_frontalface_alt.xml \
+    ../haar_like/haarcascade_frontalface_alt2.xml \
+    ../haar_like/haarcascade_mcs_nose.xml \
+    ../face_img/300008.JPG \
+    ../face_img/300004.jpg \
+    ../face_img/300007--孔畅.jpg \
+    ../face_img/Gray_Image.jpg \
+    ../face_img/Image.jpg \
+    ../face_img/lena.jpg
 
 
 

@@ -5,6 +5,7 @@
 #include <QString>
 #include "file.h"
 #include "identify.h"
+#include "camp.h"
 class MainWindow;
 namespace Ui {
 class Face;
@@ -27,11 +28,14 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_5_clicked();
+
 private:
     Ui::Face *ui;
     MainWindow * m_mainWindow;
     File *m_file;
     Identify * m_identify;
+    Camp * m_camputer;
 };
 
 #endif // FACE_H

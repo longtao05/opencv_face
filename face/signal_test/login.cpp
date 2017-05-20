@@ -9,6 +9,9 @@ Login::Login(QWidget *parent) :
     ui->setupUi(this);
     ui->lineEdit_2->setEchoMode(QLineEdit::Password);
     m_mainWindow = new MainWindow();
+    ui->pushButton->setEnabled(false);
+    ui->pushButton_2->setEnabled(false);
+
 }
 
 Login::~Login()
@@ -20,7 +23,7 @@ Login::~Login()
 //登录键
 void Login::on_pushButton_3_clicked()
 {
-    //if(ui->lineEdit->text().trimmed()==tr("130610103") && ui->lineEdit_2->text()==tr("130610103"))
+    //if(ui->lineEdit->text().trimmed()==tr("root") && ui->lineEdit_2->text()==tr("fjl"))
     if(ui->lineEdit->text().trimmed()==tr("") && ui->lineEdit_2->text()==tr(""))
     {
         //判断用户名和密码是否正确

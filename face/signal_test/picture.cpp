@@ -20,3 +20,22 @@ void Picture::on_pushButton_4_clicked()
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
 }
+
+void Picture::on_pushButton_2_clicked()
+{
+
+    m_file = new File();
+    m_file->DeleteFile();
+}
+
+void Picture::on_pushButton_clicked()
+{
+    m_file = new File();
+    m_file->AddFile();
+}
+
+void Picture::on_pushButton_3_clicked()
+{
+    m_file = new File();
+    m_file->ReNameFile();
+}

@@ -2,6 +2,7 @@
 #define PICTURE_H
 
 #include <QDialog>
+#include"file.h"
 class MainWindow;
 namespace Ui {
 class Picture;
@@ -18,9 +19,16 @@ public:
 private slots:
     void on_pushButton_4_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::Picture *ui;
     MainWindow * m_mainWindow;
+    File *m_file;
 };
 
 #endif // PICTURE_H
